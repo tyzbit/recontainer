@@ -49,8 +49,7 @@ for i in *.mkv; do
 		ffmpeg -i "$i" 2>&1 | grep -q "Video: h264"
 		if [ $? -eq 0 ]; then
 			if [ "$convert" != true ]; then
-				echo "convert $i?"
-				read p
+				read -p "convert $i? " p
 			fi
 			if [[ ${p,,} == y* ]] || [ "$convert" = true ]; then 
 				mp4ify "$i"
@@ -58,8 +57,7 @@ for i in *.mkv; do
 			fi
 			unset p
 			if [ "$delete" != true ]; then
-				echo "delete $i?"
-				read p
+				read -p "delete $i? " p
 			fi
 			if [[ ${p,,} == y* ]] || [ "$delete" = true ]; then 
 				if [[ $exit == 0 ]]; then
