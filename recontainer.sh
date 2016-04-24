@@ -54,6 +54,7 @@ for i in *.mkv; do
 			fi
 			if [[ ${p,,} == y* ]] || [ "$convert" = true ]; then 
 				mp4ify "$i"
+				exit=$?
 			fi
 			unset p
 			if [ "$delete" != true ]; then
@@ -61,7 +62,11 @@ for i in *.mkv; do
 				read p
 			fi
 			if [[ ${p,,} == y* ]] || [ "$delete" = true ]; then 
-				rm "$i"
+				if [[ $exit == 0 ]]; then
+					rm "$i"
+				else
+					"Exit status of the conversion was $exit, not blindly deleting $i"
+				fi
 			fi
 		fi
 	fi
